@@ -83,14 +83,21 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Projects</h2>
+          <h2>Custom Applications for ADALM-PLUTO SDR</h2>
         </div>
 
         <p align="justify">
             Generally, a host computer is connected to a ADALM-Pluto SDR to stream incoming and outgoing data through standard frameworks such as MATLAB or GNU Radio. However, since Pluto SDR has a Linux based operating system as part of the provided firmware, custom C or C++ applications can also be written and cross-compiled on the host computer which can then be executed on the Pluto SDR locally. A complete guide with the prerequisites, configuration steps and a working example is provided below. 
         </p>
 
-        
+        <p align="justify">
+          Prerequisites:
+          <ol>
+            <li><p align="justify">Host computer: Windows (x86) or Linux (x86 or ARM) or Raspberry Pi computer.</p></li>
+            <li><p align="justify">Cross-compilation tools: Since, we are going to build the application on the host computer, we have to cross-compile the application to generate the executable which can run on the single-core ARM® Cortex™-A9 MPCore™ (666.66 MHz) of the Pluto SDR. The cross-compilation tools are available at: Linaro toolchain [https://releases.linaro.org/components/toolchain/binaries/].</p></li>
+            <li><p align="justify">System Root [https://github.com/analogdevicesinc/plutosdr-fw/releases]: For statically linking libraries with the custom application.</p></li>
+            <li><p align="justify">Pluto SDR: An ADALM-Pluto SDR with a USB cable. </p></li>
+          </ol>
 
       </div>
     </section><!-- End Projects Section -->
