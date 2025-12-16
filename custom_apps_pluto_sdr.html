@@ -136,13 +136,27 @@
         </p>
 
         <p align="justify">
+            NOTE: Firmware of the Pluto SDR can be updated by downloading the desired firmware version [2].
+        </p>
+
+        <p align="justify">
             So, up to this point, we have downloaded all the necessary tools and we have set up our host computer to start building a custom application. Now, the following configuration steps were performed in the virtual Ubuntu OS. Also, please refer to the following screenshots and the specified commands to complete the configuration steps.
         </p>
 
         <p align="justify">
             <b>Step 1:</b> Unpack the downloaded compressed files in the base location or create a new directory. I am using the base location to unpack the compressed files.
 
-            code
+            <pre><code>
+              $ sudo mkdir -p /opt/toolchains
+              $ cd /opt/toolchains
+              $ sudo tar -xf "path_to_the_directory"/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz
+              $ cd
+              $ export PATH=$PATH:/opt/toolchains/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf/bin
+              $ arm-linux-gnueabihf-gcc --version
+              $ tar zxvf "path_to_the_directory"/sysroot-v0.39.tar.gz
+              $ mv staging $HOME/pluto-0.39.sysroot
+            </code></pre>
+        
         </p>
 
         <p align="justify">
@@ -152,7 +166,7 @@
               #include &lt;stdio.h&gt;
               
               int main(void) {
-                  printf("Hello from Pluto SDR!\\n");
+                  printf("Hello from Pluto SDR!\n");
                   return 0;
               }
             </code></pre>
@@ -162,13 +176,25 @@
         <p align="justify">
             <b>Step 3:</b> Cross-compile the C program "hello.c" and generate the executable "hello_pluto".
 
-            code
+            <pre><code>
+              $ arm-linux-gnueabihf-gcc -mfloat-abi=hard --sysroot=$HOME/pluto-0.39.sysroot -O2 -std=gnu99 hello.c -o hello_pluto
+            </code></pre>
+        
         </p>
 
         <p align="justify">
             <b>Step 4:</b> Copy the file over to the Pluto SDR [username: root, password: analog].
 
-            code
+            <pre><code>
+              $ scp hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
+            </code></pre>
+
+            If this command is not working and you are getting an error saying "Connection closed.", use the following command instead:
+        
+            <pre><code>
+              $ scp -O hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
+            </code></pre>
+        
         </p>
 
         <p align="justify">
@@ -178,18 +204,27 @@
         <p align="justify">
             <b>Step 5:</b> Connect to the Pluto SDR remotely and run the executable on the Pluto SDR.
 
-            code
+            <pre><code>
+              $ ssh root@"ip_address_as_specified_in_config.txt"
+              $ cd "path_to_the_executable_directory"
+              $ ./hello_pluto
+            </code></pre>
         </p>
 
         <p align="justify">
             You should see the Pluto SDR remote connection terminal showing the message "Hello from Pluto SDR!".
         </p>
 
-        
         <p align="justify">
             NOTE: The IP address of a Pluto SDR can be checked in the same way as we have checked the firmware version.
         </p>
 
+        <p align="justify">
+            References:<br>
+            [1] https://wiki.analog.com/university/tools/pluto/devs/embedded_code<br>
+            [2] https://wiki.analog.com/university/tools/pluto/users/firmware<br>
+        </p>
+        
         <p align="justify">
             Please feel free to reach out to me at <b>msiraj13@asu.edu</b> for any questions or queries regarding this project.
         </p>
