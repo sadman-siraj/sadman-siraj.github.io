@@ -98,6 +98,96 @@
             <li><p align="justify">System Root [https://github.com/analogdevicesinc/plutosdr-fw/releases]: For statically linking libraries with the custom application.</p></li>
             <li><p align="justify">Pluto SDR: An ADALM-Pluto SDR with a USB cable. </p></li>
           </ol>
+        </p>
+
+        <p align="justify">
+          NOTE: Prerequisites 2 and 3 should be downloaded based on the version of the firmware on the Pluto SDR. The firmware version of a Pluto SDR can be easily checked with the following steps:
+          <ol>
+            <li><p align="justify">Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR.</p></li>
+            <li><p align="justify">Find the "info.html" file in the Pluto SDR device drive and open the file.</p></li>
+            <li><p align="justify">Note the firmware version in the "Firmware" section of the webpage.</p></li>
+            <li><p align="justify">Check the versions of prerequisites 2 and 3 in the list of compatible tools.</p></li>
+          </ol>
+        </p>
+
+        <p align="justify">
+            Configuration Steps:<br>
+            To show the configuration steps specifically, I am using a Windows (x86-64) host computer with WSL (Windows Subsystem for Linux) enabled and hosting a Windows-native virtual Ubuntu 24.04.1 LTS operating system. Also, the firmware version of my Pluto SDR is the latest v0.39 (as of 12/15/2025). The following screenshots show the step-by-step process of checking the firmware version and the corresponding versions of the other compatible tools required for building, compiling and executing a custom C or C++ application locally on the Pluto SDR. 
+        </p>
+
+        <p align="justify">
+            <b>Step 1:</b> Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR. 
+        </p>
+
+        <p align="justify">
+            <b>Step 2:</b> Find the "info.html" file in the Pluto SDR device drive and open the file.
+        </p>
+
+        <p align="justify">
+            <b>Step 3:</b> Note the firmware version in the "Firmware" section of the webpage.
+        </p>
+
+        <p align="justify">
+            <b>Step 4:</b> Check the versions of prerequisites 2 and 3 in the list of compatible tools.
+        </p>
+
+        <p align="justify">
+            <b>Step 5:</b> Download the compatible version of the Linaro toolchain and the System Root. In my case (firmware version 0.39 which is the latest as of 12/15/2025), the compatible version of the Linaro toolchain was downloaded from "https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabihf/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz" and the compatible version of the System Root was downloaded from "https://github.com/analogdevicesinc/plutosdr-fw/releases/sysroot-v0.39.tar.gz". The compressed files were directly downloaded into a directory in my Windows C drive. Please note the path of the downloaded files as we will need this later for unpacking the compressed files in the virtual Ubuntu OS.
+        </p>
+
+        <p align="justify">
+            So, up to this point, we have downloaded all the necessary tools and we have set up our host computer to start building a custom application. Now, the following configuration steps were performed in the virtual Ubuntu OS. Also, please refer to the following screenshots and the specified commands to complete the configuration steps.
+        </p>
+
+        <p align="justify">
+            <b>Step 1:</b> Unpack the downloaded compressed files in the base location or create a new directory. I am using the base location to unpack the compressed files.
+
+            code
+        </p>
+
+        <p align="justify">
+            <b>Step 2:</b> Build a custom application. I am using a simple C program "hello.c" as an example here with the following code:
+
+            code
+        </p>
+
+        <p align="justify">
+            <b>Step 3:</b> Cross-compile the C program "hello.c" and generate the executable "hello_pluto".
+
+            code
+        </p>
+
+        <p align="justify">
+            <b>Step 4:</b> Copy the file over to the Pluto SDR [username: root, password: analog].
+
+            code
+        </p>
+
+        <p align="justify">
+            I have chosen to copy the files over to the directory "/mnt/jffs2" so that executable exists even if the Pluto SDR is rebooted or power-cycled. If no "path_to_the_executable_directory" is specified, the executable will be copied over to the default base directory of the Pluto SDR OS in which case the executable will not be persistent over subsequent reboots.
+        </p>
+
+        <p align="justify">
+            <b>Step 5:</b> Connect to the Pluto SDR remotely and run the executable on the Pluto SDR.
+
+            code
+        </p>
+
+        <p align="justify">
+            You should see the Pluto SDR remote connection terminal showing the message "Hello from Pluto SDR!".
+        </p>
+
+        
+        <p align="justify">
+            NOTE: The IP address of a Pluto SDR can be checked in the same way as we have checked the firmware version.
+        </p>
+
+        <p align="justify">
+            Please feel free to reach out to me at <b>msiraj13@asu.edu</b> for any questions or queries regarding this project.
+        </p>
+        
+        
+        
 
       </div>
     </section><!-- End Projects Section -->
