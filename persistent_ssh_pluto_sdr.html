@@ -86,162 +86,192 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Custom C/C++ Applications for ADALM-PLUTO SDR</h2>
+          <h2>Persistent for ADALM-PLUTO SDR</h2>
         </div>
 
         <br><br><img src="img/sdr_c.png" width="400"><br><br><br>
 
         <p align="justify">
-            Generally, a host computer is connected to a ADALM-Pluto SDR to stream incoming and outgoing data through standard frameworks such as MATLAB or GNU Radio. However, since Pluto SDR has a Linux based operating system as part of the provided firmware, custom C or C++ applications can also be written and cross-compiled on the host computer which can then be executed on the Pluto SDR locally. A complete guide with the prerequisites, configuration steps and a working example is provided below. 
+            To access the operating system and the overall firmware of an ADALM-PLUTO SDR, SSH (Secure Shell) is a recommended approach. This approach also provides a way into executing custom applications locally on the Pluto SDR (for example: pre-compiled applications written in C programming language). In some cases, these applications may require communication with the host computer. Whenever the host computer attempts to communicate with the Pluto SDR, especially through loading files into the Pluto SDR firmware, the host computer must undergo an authentication process with the Pluto SDR. 
+        </p>
+
+        <p align="justify">
+          The authentication process involves two stages through which firstly, it is verified by the host computer whether the specific Pluto SDR concerned falls among the “known hosts” and secondly, a username and password-based authentication (an example is shown in Figure 1). Generally, the username and password are set to “root” and “analog” respectively, unless otherwise changed. However, for fast and direct communication between the host computer and the Pluto SDR, persistent SSH connections are required. Specifically, persistent SSH connections enable seamless communication between the host computer and the Pluto SDR without having to go through the two authentication stages [1].
+        </p>
+
+        <p align="justify">
+          A complete guide with the prerequisites, configuration steps and a working example are provided below.
+        </p>
+
+        <p align="justify">
+            <br><img src="img/ssh_0.png" width="400"><br><br><br>
         </p>
 
         <p align="justify">
           Prerequisites:
           <ol>
             <li><p align="justify">Host computer: Windows (x86) or Linux (x86 or ARM) or Raspberry Pi computer.</p></li>
-            <li><p align="justify">Cross-compilation tools: Since, we are going to build the application on the host computer, we have to cross-compile the application to generate the executable which can run on the single-core ARM® Cortex™-A9 MPCore™ (666.66 MHz) of the Pluto SDR. The cross-compilation tools are available at: Linaro toolchain [https://releases.linaro.org/components/toolchain/binaries/].</p></li>
-            <li><p align="justify">System Root [https://github.com/analogdevicesinc/plutosdr-fw/releases]: For statically linking libraries with the custom application.</p></li>
-            <li><p align="justify">Pluto SDR: An ADALM-Pluto SDR with a USB cable. </p></li>
+            <li><p align="justify">Pluto SDR: An ADALM-Pluto SDR with a USB cable.</p></li>
+            <li><p align="justify">Firmware: An ADALM-Pluto SDR with firmware version v0.32 or above.</p></li>
           </ol>
         </p>
 
         <p align="justify">
-          NOTE: Prerequisites 2 and 3 should be downloaded based on the version of the firmware on the Pluto SDR. The firmware version of a Pluto SDR can be easily checked with the following steps:
-          <ol>
-            <li><p align="justify">Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR.</p></li>
-            <li><p align="justify">Find the "info.html" file in the Pluto SDR device drive and open the file.</p></li>
-            <li><p align="justify">Note the firmware version in the "Firmware" section of the webpage.</p></li>
-            <li><p align="justify">Check the versions of prerequisites 2 and 3 in the list of compatible tools.</p></li>
-          </ol>
+          Configuration Steps:<br>
+          To show the configuration steps specifically, I am using a Windows (x86-64) host computer with WSL (Windows Subsystem for Linux) enabled and hosting a Windows-native virtual Ubuntu 24.04.1 LTS operating system. Also, the firmware version of my Pluto SDR is the latest v0.39 (as of 12/15/2025).  
         </p>
 
         <p align="justify">
-            Configuration Steps:<br>
-            To show the configuration steps specifically, I am using a Windows (x86-64) host computer with WSL (Windows Subsystem for Linux) enabled and hosting a Windows-native virtual Ubuntu 24.04.1 LTS operating system. Also, the firmware version of my Pluto SDR is the latest v0.39 (as of 12/15/2025). The following screenshots show the step-by-step process of checking the firmware version and the corresponding versions of the other compatible tools required for building, compiling and executing a custom C or C++ application locally on the Pluto SDR. 
+          The following commands and screenshots show the step-by-step process of creating authentication keys for the SSH protocol, creating persistent instances of the keys and enabling the Pluto SDR to use the persistent keys for SSH. As a working example, I am using a Pluto SDR (PCB: Rev C) and I will modify the base “NETWORK” configuration to assign it a new IP address. I will also create a “config” file in my virtual Ubuntu OS to keep track of this updated IP address.
         </p>
 
         <p align="justify">
-            <b>Step 1:</b> Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR.<br>
-
-            <br><img src="img/fw_1.png" width="400"><br><br><br>
+          NOTE: The configuration steps are shown here to bypass the standard authentication steps required for the SSH protocol. <b>So, generally the steps illustrated in this guide should be followed only when the host computer and/or the Pluto SDR is a protected system and cannot be openly accessed.</b> All the commands starting with the symbols “$” and “#” are to be executed on the host computer and the Pluto SDR, respectively. 
         </p>
 
         <p align="justify">
-            <b>Step 2:</b> Find the "info.html" file in the Pluto SDR device drive and open the file.<br>
+            <b>Step 1:</b> Connect the Pluto SDR to the host computer via USB and update the base “NETWORK” configuration. (IP address subnet “192.168.x” can be specified according to need and to ensure that multiple Pluto SDRs use different subnets which is a requirement when establishing multiple SSH connections to multiple Pluto SDRs simultaneously).<br>
 
-            <br><img src="img/fw_2.png" width="400"><br><br><br>
+            <br><img src="img/ip_1.png" width="400"><br><br><br>
+
+            <br><img src="img/ip_2.png" width="400"><br><br><br>
+
+            <br><img src="img/ip_3.png" width="400"><br><br><br>
         </p>
 
         <p align="justify">
-            <b>Step 3:</b> Note the firmware version in the "Firmware" section of the webpage.<br>
-
-            <br><img src="img/fw_3.png" width="600"><br><br><br>
-        </p>
-
-        <p align="justify">
-            <b>Step 4:</b> Check the versions of prerequisites 2 and 3 in the list of compatible tools.<br>
-
-            <br><img src="img/fw_4.png" width="600"><br><br><br>
-        </p>
-
-        <p align="justify">
-            <b>Step 5:</b> Download the compatible version of the Linaro toolchain and the System Root. In my case (firmware version 0.39 which is the latest as of 12/15/2025), the compatible version of the Linaro toolchain was downloaded from "https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabihf/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz" and the compatible version of the System Root was downloaded from "https://github.com/analogdevicesinc/plutosdr-fw/releases/sysroot-v0.39.tar.gz". The compressed files were directly downloaded into a directory in my Windows C drive. Please note the path of the downloaded files as we will need this later for unpacking the compressed files in the virtual Ubuntu OS.
-        </p>
-
-        <p align="justify">
-            NOTE: Firmware of the Pluto SDR can be updated by downloading the desired firmware version [2].
-        </p>
-
-        <p align="justify">
-            So, up to this point, we have downloaded all the necessary tools and we have set up our host computer to start building a custom application. Now, the following configuration steps were performed in the virtual Ubuntu OS. Also, please refer to the following screenshots and the specified commands to complete the configuration steps.
-        </p>
-
-        <p align="justify">
-            <b>Step 1:</b> Unpack the downloaded compressed files in the base location or create a new directory. I am using the base location to unpack the compressed files.
+            <b>Step 2:</b> Create authentication keys for the SSH protocol if no authentication keys are already created. (check for existing authentication keys for the SSH protocol in “~/.ssh”)<br>
 
             <pre><code>
-              $ sudo mkdir -p /opt/toolchains
-              $ cd /opt/toolchains
-              $ sudo tar -xf "path_to_the_directory"/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz
-              $ cd
-              $ export PATH=$PATH:/opt/toolchains/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf/bin
-              $ arm-linux-gnueabihf-gcc --version
-              $ tar zxvf "path_to_the_directory"/sysroot-v0.39.tar.gz
-              $ mv staging $HOME/pluto-0.39.sysroot
+              $ ssh-keygen -t ed25519
             </code></pre>
-        
+
+            <br><img src="img/ssh_1.png" width="400"><br><br><br>
         </p>
 
         <p align="justify">
-            <b>Step 2:</b> Build a custom application. I am using a simple C program "hello.c" as an example here with the following code:
+            <b>Step 3:</b> Create/update a “config” file for the SSH protocol to list the Pluto SDR concerned. (check for existing config for the SSH protocol in “~/.ssh”)<br>
 
             <pre><code>
-              #include &lt;stdio.h&gt;
-              
-              int main(void) {
-                  printf("Hello from Pluto SDR!\n");
-                  return 0;
-              }
+              $ vi ~/.ssh/config
             </code></pre>
-        
-        </p>
 
-        <p align="justify">
-            <b>Step 3:</b> Cross-compile the C program "hello.c" and generate the executable "hello_pluto".
+            In the “config” file, add the following:
 
             <pre><code>
-              $ arm-linux-gnueabihf-gcc -mfloat-abi=hard --sysroot=$HOME/pluto-0.39.sysroot -O2 -std=gnu99 hello.c -o hello_pluto
+              Host pluto_s7
+              HostName 192.168.7.7       # pluto sdr s7 IP address
+              User root
+              IdentityFile ~/.ssh/id_ed25519
             </code></pre>
-        
+
+            <br><img src="img/ssh_2.png" width="400"><br><br><br>
+
+            <br><img src="img/ssh_3.png" width="400"><br><br><br>
         </p>
 
         <p align="justify">
-            <b>Step 4:</b> Copy the file over to the Pluto SDR [username: root, password: analog].
+            <b>Step 4:</b> Copy the public authentication key over to the Pluto SDR [username: "root", password: "analog"].<br>
 
             <pre><code>
-              $ scp hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
+              $ scp ~/.ssh/id_ed25519.pub root@192.168.7.7:/root/pluto_key.pub
             </code></pre>
 
             If this command is not working and you are getting an error saying "Connection closed.", use the following command instead:
-        
-            <pre><code>
-              $ scp -O hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
-            </code></pre>
-        
-        </p>
-
-        <p align="justify">
-            I have chosen to copy the files over to the directory "/mnt/jffs2" so that executable exists even if the Pluto SDR is rebooted or power-cycled. If no "path_to_the_executable_directory" is specified, the executable will be copied over to the default base directory of the Pluto SDR OS in which case the executable will not be persistent over subsequent reboots.
-        </p>
-
-        <p align="justify">
-            <b>Step 5:</b> Connect to the Pluto SDR remotely and run the executable on the Pluto SDR.
 
             <pre><code>
-              $ ssh root@"ip_address_as_specified_in_config.txt"
-              $ cd "path_to_the_executable_directory"
-              $ ./hello_pluto
+              $ scp -O ~/.ssh/id_ed25519.pub root@192.168.7.7:/root/pluto_key.pub
             </code></pre>
+
+            <br><img src="img/ssh_4.png" width="600"><br><br><br>
         </p>
 
         <p align="justify">
-            You should see the Pluto SDR remote connection terminal showing the message "Hello from Pluto SDR!".<br>
+          Up to this point, we have completed the steps required to be completed on the host computer. The next steps are to be completed on the Pluto SDR.
         </p>
 
-        <br><img src="img/c_1.png" width="700"><br>
+        <p align="justify">
+            <b>Step 5:</b> Connect to the Pluto SDR remotely via SSH (with known username and password one last time).
 
-        <br><img src="img/c_2.png" width="700"><br>
+            <pre><code>
+              $ scp -O ~/.ssh/id_ed25519.pub root@192.168.7.7:/root/pluto_key.pub
+            </code></pre>
 
-        <br><img src="img/c_3.png" width="700"><br><br><br>
+            <br><img src="img/ssh_5.png" width="600"><br><br><br>
+        </p>
 
         <p align="justify">
-            NOTE: The IP address of a Pluto SDR can be checked in the same way as we have checked the firmware version.
+            <b>Step 6:</b> Enable device persistent keys for the Pluto SDR for subsequent direct SSH connections.
+
+            <pre><code>
+              # device_persistent_keys
+              # mkdir -p /root/.ssh
+              # chmod 700 /root/.ssh
+              # cat /root/pluto_key.pub >> /root/.ssh/authorized_keys
+              # chmod 600 /root/.ssh/authorized_keys
+              # rm /root/pluto_key.pub
+              # cp /root/.ssh/authorized_keys /mnt/jffs2/etc/dropbear/authorized_keys
+              # rm /root/.ssh/authorized_keys
+            </code></pre>
+
+            <br><img src="img/ssh_6.png" width="600"><br><br><br>
+        </p>
+
+        <p align="justify">
+            <b>Step 7:</b> Create a shell script in the persistent directory “/mnt/jffs2” called “autorun.sh” The Pluto SDR will execute the commands in this shell script after booting up.
+
+            <pre><code>
+              # vi /mnt/jffs2/autorun.sh
+            </code></pre>
+
+            In the “autorum.sh” file, add the following:
+
+            <pre><code>
+              #!/bin/sh
+              # /mnt/jffs2/autorun.sh
+              # Install persistent SSH authorized_keys at boot.
+              
+              PERSIST_DIR=/mnt/jffs2/etc/dropbear
+              KEY_FILE="$PERSIST_DIR/authorized_keys"
+              
+              if [ -f "$KEY_FILE" ]; then
+                  # For Dropbear builds that expect /etc/dropbear/authorized_keys
+                  mkdir -p /etc/dropbear
+                  cp "$KEY_FILE" /etc/dropbear/authorized_keys
+                  chmod 600 /etc/dropbear/authorized_keys
+              
+                  # For Dropbear builds that expect ~/.ssh/authorized_keys
+                  mkdir -p /root/.ssh
+                  cp "$KEY_FILE" /root/.ssh/authorized_keys
+                  chmod 700 /root/.ssh
+                  chmod 600 /root/.ssh/authorized_keys
+              fi
+            </code></pre>
+
+            <br><img src="img/ssh_7.png" width="600"><br><br><br>
+        </p>
+
+
+        <p align="justify">
+            <b>Step 8:</b> Make the shell script executable, reboot the Pluto SDR so that changes can take place and finally, perform a direct SSH now with the updated configuration.
+
+            <pre><code>
+              # chmod +x /mnt/jffs2/autorun.sh
+              # reboot
+            </code></pre>
+
+            <br><img src="img/ssh_8.png" width="600"><br><br><br>
+
+            <pre><code>
+              $ ssh pluto_s7
+            </code></pre>
+
+            <br><img src="img/ssh_9.png" width="600"><br><br><br>
         </p>
 
         <p align="justify">
             References:<br>
             [1] https://wiki.analog.com/university/tools/pluto/devs/embedded_code<br>
-            [2] https://wiki.analog.com/university/tools/pluto/users/firmware<br>
         </p>
         
         <p align="justify">
