@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Md Sadman Siraj - Personal Website</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+        <img src="assets/img/Md Sadman Siraj dp.jpg" alt="" class="img-fluid rounded-circle">
+        <h1 class="text-light"><a href="index.html">Md Sadman Siraj</a></h1>
+        <div class="social-links mt-3 text-center">
+          <a href="https://www.linkedin.com/in/sadman-siraj/" class="linkedin" target="_blank"><i class="bx bxl-linkedin"></i></a>
+          <!-- <a href="https://twitter.com/rtasakis" class="twitter"><i class="bx bxl-twitter"></i></a> -->
+          <a href="https://scholar.google.com/citations?user=S5HhON8AAAAJ&hl=en" class="google-scholar" target="_blank"><i class="bx bxl-google"></i></a>
+        </div>
+      </div>
+
+      <!--
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
+          <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
+          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Projects & Publications</span></a></li>
+          <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Honors & Awards</span></a></li>
+          <li><a href="#skills" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Teaching</span></a></li>
+        </ul>
+      </nav><!-- .nav-menu 
+      -->
+      
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="hero-container" data-aos="fade-in">
+      <h1>Md Sadman Siraj</h1>
+      <p><span class="typed" data-typed-items="PhD Candidate, Graduate Research Associate"></span></p>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Projects Section ======= -->
+    <section id="portfolio" class="portfolio section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Custom C/C++ Applications for ADALM-PLUTO SDR</h2>
+        </div>
+
+        <br><br><img src="img/sdr_c.png" width="400"><br><br><br>
+
+        <p align="justify">
+            Generally, a host computer is connected to a ADALM-Pluto SDR to stream incoming and outgoing data through standard frameworks such as MATLAB or GNU Radio. However, since Pluto SDR has a Linux based operating system as part of the provided firmware, custom C or C++ applications can also be written and cross-compiled on the host computer which can then be executed on the Pluto SDR locally. A complete guide with the prerequisites, configuration steps and a working example is provided below. 
+        </p>
+
+        <p align="justify">
+          Prerequisites:
+          <ol>
+            <li><p align="justify">Host computer: Windows (x86) or Linux (x86 or ARM) or Raspberry Pi computer.</p></li>
+            <li><p align="justify">Cross-compilation tools: Since, we are going to build the application on the host computer, we have to cross-compile the application to generate the executable which can run on the single-core ARM® Cortex™-A9 MPCore™ (666.66 MHz) of the Pluto SDR. The cross-compilation tools are available at: Linaro toolchain [https://releases.linaro.org/components/toolchain/binaries/].</p></li>
+            <li><p align="justify">System Root [https://github.com/analogdevicesinc/plutosdr-fw/releases]: For statically linking libraries with the custom application.</p></li>
+            <li><p align="justify">Pluto SDR: An ADALM-Pluto SDR with a USB cable. </p></li>
+          </ol>
+        </p>
+
+        <p align="justify">
+          NOTE: Prerequisites 2 and 3 should be downloaded based on the version of the firmware on the Pluto SDR. The firmware version of a Pluto SDR can be easily checked with the following steps:
+          <ol>
+            <li><p align="justify">Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR.</p></li>
+            <li><p align="justify">Find the "info.html" file in the Pluto SDR device drive and open the file.</p></li>
+            <li><p align="justify">Note the firmware version in the "Firmware" section of the webpage.</p></li>
+            <li><p align="justify">Check the versions of prerequisites 2 and 3 in the list of compatible tools.</p></li>
+          </ol>
+        </p>
+
+        <p align="justify">
+            Configuration Steps:<br>
+            To show the configuration steps specifically, I am using a Windows (x86-64) host computer with WSL (Windows Subsystem for Linux) enabled and hosting a Windows-native virtual Ubuntu 24.04.1 LTS operating system. Also, the firmware version of my Pluto SDR is the latest v0.39 (as of 12/15/2025). The following screenshots show the step-by-step process of checking the firmware version and the corresponding versions of the other compatible tools required for building, compiling and executing a custom C or C++ application locally on the Pluto SDR. 
+        </p>
+
+        <p align="justify">
+            <b>Step 1:</b> Connect the Pluto SDR to a host computer and check the device drive for the Pluto SDR.<br>
+
+            <br><img src="img/fw_1.png" width="400"><br><br><br>
+        </p>
+
+        <p align="justify">
+            <b>Step 2:</b> Find the "info.html" file in the Pluto SDR device drive and open the file.<br>
+
+            <br><img src="img/fw_2.png" width="400"><br><br><br>
+        </p>
+
+        <p align="justify">
+            <b>Step 3:</b> Note the firmware version in the "Firmware" section of the webpage.<br>
+
+            <br><img src="img/fw_3.png" width="600"><br><br><br>
+        </p>
+
+        <p align="justify">
+            <b>Step 4:</b> Check the versions of prerequisites 2 and 3 in the list of compatible tools.<br>
+
+            <br><img src="img/fw_4.png" width="600"><br><br><br>
+        </p>
+
+        <p align="justify">
+            <b>Step 5:</b> Download the compatible version of the Linaro toolchain and the System Root. In my case (firmware version 0.39 which is the latest as of 12/15/2025), the compatible version of the Linaro toolchain was downloaded from "https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabihf/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz" and the compatible version of the System Root was downloaded from "https://github.com/analogdevicesinc/plutosdr-fw/releases/sysroot-v0.39.tar.gz". The compressed files were directly downloaded into a directory in my Windows C drive. Please note the path of the downloaded files as we will need this later for unpacking the compressed files in the virtual Ubuntu OS.
+        </p>
+
+        <p align="justify">
+            NOTE: Firmware of the Pluto SDR can be updated by downloading the desired firmware version [2].
+        </p>
+
+        <p align="justify">
+            So, up to this point, we have downloaded all the necessary tools and we have set up our host computer to start building a custom application. Now, the following configuration steps were performed in the virtual Ubuntu OS. Also, please refer to the following screenshots and the specified commands to complete the configuration steps.
+        </p>
+
+        <p align="justify">
+            <b>Step 1:</b> Unpack the downloaded compressed files in the base location or create a new directory. I am using the base location to unpack the compressed files.
+
+            <pre><code>
+              $ sudo mkdir -p /opt/toolchains
+              $ cd /opt/toolchains
+              $ sudo tar -xf "path_to_the_directory"/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz
+              $ cd
+              $ export PATH=$PATH:/opt/toolchains/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf/bin
+              $ arm-linux-gnueabihf-gcc --version
+              $ tar zxvf "path_to_the_directory"/sysroot-v0.39.tar.gz
+              $ mv staging $HOME/pluto-0.39.sysroot
+            </code></pre>
+        
+        </p>
+
+        <p align="justify">
+            <b>Step 2:</b> Build a custom application. I am using a simple C program "hello.c" as an example here with the following code:
+
+            <pre><code>
+              #include &lt;stdio.h&gt;
+              
+              int main(void) {
+                  printf("Hello from Pluto SDR!\n");
+                  return 0;
+              }
+            </code></pre>
+        
+        </p>
+
+        <p align="justify">
+            <b>Step 3:</b> Cross-compile the C program "hello.c" and generate the executable "hello_pluto".
+
+            <pre><code>
+              $ arm-linux-gnueabihf-gcc -mfloat-abi=hard --sysroot=$HOME/pluto-0.39.sysroot -O2 -std=gnu99 hello.c -o hello_pluto
+            </code></pre>
+        
+        </p>
+
+        <p align="justify">
+            <b>Step 4:</b> Copy the file over to the Pluto SDR [username: root, password: analog].
+
+            <pre><code>
+              $ scp hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
+            </code></pre>
+
+            If this command is not working and you are getting an error saying "Connection closed.", use the following command instead:
+        
+            <pre><code>
+              $ scp -O hello_pluto root@"ip_address_as_specified_in_config.txt":"path_to_the_executable_directory"
+            </code></pre>
+        
+        </p>
+
+        <p align="justify">
+            I have chosen to copy the files over to the directory "/mnt/jffs2" so that executable exists even if the Pluto SDR is rebooted or power-cycled. If no "path_to_the_executable_directory" is specified, the executable will be copied over to the default base directory of the Pluto SDR OS in which case the executable will not be persistent over subsequent reboots.
+        </p>
+
+        <p align="justify">
+            <b>Step 5:</b> Connect to the Pluto SDR remotely and run the executable on the Pluto SDR.
+
+            <pre><code>
+              $ ssh root@"ip_address_as_specified_in_config.txt"
+              $ cd "path_to_the_executable_directory"
+              $ ./hello_pluto
+            </code></pre>
+        </p>
+
+        <p align="justify">
+            You should see the Pluto SDR remote connection terminal showing the message "Hello from Pluto SDR!".<br>
+        </p>
+
+        <br><img src="img/c_1.png" width="700"><br>
+
+        <br><img src="img/c_2.png" width="700"><br>
+
+        <br><img src="img/c_3.png" width="700"><br><br><br>
+
+        <p align="justify">
+            NOTE: The IP address of a Pluto SDR can be checked in the same way as we have checked the firmware version.
+        </p>
+
+        <p align="justify">
+            References:<br>
+            [1] https://wiki.analog.com/university/tools/pluto/devs/embedded_code<br>
+            [2] https://wiki.analog.com/university/tools/pluto/users/firmware<br>
+        </p>
+        
+        <p align="justify">
+            Please feel free to reach out to me at <b>msiraj13@asu.edu</b> for any questions or queries regarding this project.
+        </p>
+        
+        
+        
+
+      </div>
+    </section><!-- End Projects Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        <!-- &copy; Copyright <strong><span>iPortfolio</span></strong> -->
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/ -->
+        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+        <a href="https://github.com/sadman-siraj" target="_blank">My Github</a>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
